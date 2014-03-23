@@ -1,12 +1,19 @@
 package com.test.f5.d3.test2.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayNumber;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -76,6 +83,8 @@ public class D3Test2 implements EntryPoint {
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		dialogVPanel.add(closeButton);
 		dialogBox.setWidget(dialogVPanel);
+
+		drawGraphs();
 
 		// Add a handler to close the DialogBox
 		closeButton.addClickHandler(new ClickHandler() {
@@ -151,4 +160,69 @@ public class D3Test2 implements EntryPoint {
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
 	}
+
+	private void drawGraphs() {
+		SvgPanel svgPanel = new SvgPanel("svgBarsGraph");
+		RootPanel.get("graphContainer").add(svgPanel);
+		createSvgBarchart();
+
+		SvgPanel svgPanel1 = new SvgPanel("svgRotatedGraph");
+		RootPanel.get("graphContainer").add(svgPanel1);
+		createSvgRotatedBarchart();
+
+		createDivChart();
+	}
+
+	private void createDivChart() {
+		// greetingService.getGraphData(new AsyncCallback<List<Double>>() {
+		// public void onFailure(Throwable caught) {
+		// // Show the RPC error message to the user
+		// dialogBox.setText("Remote Procedure Call - Failure");
+		// serverResponseLabel.addStyleName("serverResponseLabelError");
+		// serverResponseLabel.setHTML(SERVER_ERROR);
+		// dialogBox.center();
+		// }
+		//
+		// public void onSuccess(List<Double> result) {
+		// dialogBox.setText("Remote Procedure Call");
+		// serverResponseLabel.removeStyleName("serverResponseLabelError");
+		// serverResponseLabel.setHTML(result.get(0).toString());
+		// dialogBox.center();
+
+		List<Double> data = new ArrayList<Double>();
+		for (int i = 0; i < 10; i++) {
+			data.add(Math.random() + .1);
+		}
+		// return data;
+
+		JsArrayNumber jsData = createData(data);
+
+		Element parent = RootPanel.getBodyElement();
+		Element divElement = DOM.createDiv();
+		divElement.setAttribute("class", "divChart");
+		parent.appendChild(divElement);
+		createDivBarchart(divElement, jsData);
+		// }
+		// });
+	}
+
+	private JsArrayNumber createData(List<Double> data) {
+		JsArrayNumber jsData = JavaScriptObject.createArray().cast();
+		for (int i = 0; i < data.size(); i++) {
+			jsData.push(data.get(i));
+		}
+		return jsData;
+	}
+
+	private native void createDivBarchart(Element element, JsArrayNumber jsData) /*-{
+		$wnd.draw_barchart(element, jsData);
+	}-*/;
+
+	private native void createSvgBarchart() /*-{
+		$wnd.draw_svg_barchart();
+	}-*/;
+
+	private native void createSvgRotatedBarchart() /*-{
+		$wnd.draw_svg_rotated_barchart();
+	}-*/;
 }
