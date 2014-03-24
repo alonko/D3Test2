@@ -168,9 +168,11 @@ public class D3Test2 implements EntryPoint {
 
 		createDivChart();
 
-		// SvgPanel svgPanel2 = new SvgPanel("svgRotatedGraphWithBars");
-		// RootPanel.get("graphContainer").add(svgPanel2);
 		createSvgRotatedBarchartWithBars();
+
+		SvgPanel svgPanel2 = new SvgPanel("svgDinamicData");
+		RootPanel.get("graphContainer").add(svgPanel2);
+		createSvgBarchartWithDinamicData();
 	}
 
 	private void createDivChart() {
@@ -210,5 +212,10 @@ public class D3Test2 implements EntryPoint {
 
 	private native void createSvgRotatedBarchartWithBars() /*-{
 		$wnd.draw_svg_rotated_barchart_with_bars();
+	}-*/;
+
+	private native void createSvgBarchartWithDinamicData() /*-{
+		$wnd.dinamicData();
+		$wnd.dinamicData2();
 	}-*/;
 }
