@@ -61,10 +61,6 @@ public class D3Test2 implements EntryPoint {
 		RootPanel.get("sendButtonContainer").add(sendButton);
 		RootPanel.get("errorLabelContainer").add(errorLabel);
 
-		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
-		nameField.selectAll();
-
 		// Create the popup dialog box
 		final DialogBox dialogBox = new DialogBox();
 		dialogBox.setText("Remote Procedure Call");
@@ -171,29 +167,17 @@ public class D3Test2 implements EntryPoint {
 		createSvgRotatedBarchart();
 
 		createDivChart();
+
+		// SvgPanel svgPanel2 = new SvgPanel("svgRotatedGraphWithBars");
+		// RootPanel.get("graphContainer").add(svgPanel2);
+		createSvgRotatedBarchartWithBars();
 	}
 
 	private void createDivChart() {
-		// greetingService.getGraphData(new AsyncCallback<List<Double>>() {
-		// public void onFailure(Throwable caught) {
-		// // Show the RPC error message to the user
-		// dialogBox.setText("Remote Procedure Call - Failure");
-		// serverResponseLabel.addStyleName("serverResponseLabelError");
-		// serverResponseLabel.setHTML(SERVER_ERROR);
-		// dialogBox.center();
-		// }
-		//
-		// public void onSuccess(List<Double> result) {
-		// dialogBox.setText("Remote Procedure Call");
-		// serverResponseLabel.removeStyleName("serverResponseLabelError");
-		// serverResponseLabel.setHTML(result.get(0).toString());
-		// dialogBox.center();
-
 		List<Double> data = new ArrayList<Double>();
 		for (int i = 0; i < 10; i++) {
 			data.add(Math.random() + .1);
 		}
-		// return data;
 
 		JsArrayNumber jsData = createData(data);
 
@@ -202,8 +186,6 @@ public class D3Test2 implements EntryPoint {
 		divElement.setAttribute("class", "divChart");
 		parent.appendChild(divElement);
 		createDivBarchart(divElement, jsData);
-		// }
-		// });
 	}
 
 	private JsArrayNumber createData(List<Double> data) {
@@ -224,5 +206,9 @@ public class D3Test2 implements EntryPoint {
 
 	private native void createSvgRotatedBarchart() /*-{
 		$wnd.draw_svg_rotated_barchart();
+	}-*/;
+
+	private native void createSvgRotatedBarchartWithBars() /*-{
+		$wnd.draw_svg_rotated_barchart_with_bars();
 	}-*/;
 }

@@ -32,13 +32,13 @@ h1 {
 
 /* Charts */
 .svgGraph rect {
-  fill: steelblue;
+	fill: steelblue;
 }
 
 .svgGraph text {
-  fill: white;
-  font: 10px sans-serif;
-  text-anchor: end;
+	fill: black;
+	font: 10px sans-serif;
+	text-anchor: end;
 }
 
 .divChart div {
@@ -48,4 +48,27 @@ h1 {
 	padding: 3px;
 	margin: 1px;
 	color: white;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
 }
