@@ -80,6 +80,9 @@ public class D3Test2 implements EntryPoint {
 		dialogVPanel.add(closeButton);
 		dialogBox.setWidget(dialogVPanel);
 
+		MyJSBundle bundle = GWT.create(MyJSBundle.class);
+		MyJavaScriptInjector.inject(bundle.myExtensionJS().getText());
+
 		drawGraphs();
 
 		// Add a handler to close the DialogBox
@@ -173,6 +176,10 @@ public class D3Test2 implements EntryPoint {
 		SvgPanel svgPanel2 = new SvgPanel("svgDinamicData");
 		RootPanel.get("graphContainer").add(svgPanel2);
 		createSvgBarchartWithDinamicData();
+
+		SvgPanel svgPanel3 = new SvgPanel("svgDonutChart");
+		RootPanel.get("graphContainer").add(svgPanel3);
+		createDonutChart();
 	}
 
 	private void createDivChart() {
@@ -218,4 +225,9 @@ public class D3Test2 implements EntryPoint {
 		$wnd.dinamicData();
 		$wnd.dinamicData2();
 	}-*/;
+
+	private native void createDonutChart() /*-{
+		$wnd.drawDonut();
+	}-*/;
+
 }
