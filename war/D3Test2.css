@@ -77,6 +77,10 @@ h1 {
 	display: none;
 }
 
+.chart {
+	overflow: hidden;
+}
+
 .chart rect {
 	fill: steelblue;
 	stroke: white;
