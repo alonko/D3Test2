@@ -77,6 +77,12 @@ h1 {
 	display: none;
 }
 
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
 .chart {
 	overflow: hidden;
 }
@@ -88,4 +94,12 @@ h1 {
 
 #svgDinamicData, #svgDonutChart {
 	height: 300px;
+}
+
+#svgFirstLineChart {
+	height: 600px;
+}
+
+#graphContainer {
+	height:70%;
 }

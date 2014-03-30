@@ -275,3 +275,116 @@ function drawDonut() {
 				return d[2];
 			}).attr("transform", "translate(300,200)");
 }
+
+function firstLineChart() {
+	var margin = {
+		top : 20,
+		right : 20,
+		bottom : 30,
+		left : 50
+	}, width = 960 - margin.left - margin.right, height = 500 - margin.top
+			- margin.bottom;
+
+	var data = [ {
+		"date" : "1-May-12",
+		"close" : 582.13
+	}, {
+		"date" : "30-Apr-12",
+		"close" : 583.98
+	} , {
+		"date" : "27-Apr-12",
+		"close" : 603.00
+	}, {
+		"date" : "26-Apr-12",
+		"close" : 607.70
+	}, {
+		"date" : "25-Apr-12",
+		"close" : 610.00
+	}, {
+		"date" : "24-Apr-12",
+		"close" :  560.28
+	}, {
+		"date" : "23-Apr-12",
+		"close" : 571.70
+	}, {
+		"date" : "20-Apr-12",
+		"close" : 572.98
+	}, {
+		"date" : "19-Apr-12",
+		"close" :  587.44
+	}, {
+		"date" : "18-Apr-12",
+		"close" : 608.34
+	}, {
+		"date" : "17-Apr-12",
+		"close" :609.70
+	}];
+	// date close
+	// 13-Apr-12 605.23
+	// 12-Apr-12 622.77
+	// 11-Apr-12 626.20
+	// 10-Apr-12 628.44
+	// 9-Apr-12 636.23
+	// 5-Apr-12 633.68
+	// 4-Apr-12 624.31
+	// 3-Apr-12 629.32
+	// 2-Apr-12 618.63
+	// 30-Mar-12 599.55
+	// 29-Mar-12 609.86
+	// 28-Mar-12 617.62
+	// 27-Mar-12 614.48
+	// 26-Mar-12 606.98
+	// 23-Mar-12 596.05
+	// 22-Mar-12 599.34
+	// 21-Mar-12 602.50
+	// 20-Mar-12 605.96
+	// 19-Mar-12 601.10
+	// 16-Mar-12 585.57
+	// 15-Mar-12 585.56
+	// 14-Mar-12 589.58
+	// 13-Mar-12 568.10
+
+	var parseDate = d3.time.format("%d-%b-%y").parse;
+
+	var x = d3.time.scale().range([ 0, width ]);
+
+	var y = d3.scale.linear().range([ height, 0 ]);
+
+	var xAxis = d3.svg.axis().scale(x).orient("bottom");
+
+	var yAxis = d3.svg.axis().scale(y).orient("left");
+
+	var line = d3.svg.line().x(function(d) {
+		return x(d.date);
+	}).y(function(d) {
+		return y(d.close);
+	});
+
+	var svg = d3.select("#svgFirstLineChart").append("svg").attr("width",
+			width + margin.left + margin.right).attr("height",
+			height + margin.top + margin.bottom).append("g").attr("transform",
+			"translate(" + margin.left + "," + margin.top + ")");
+
+	// d3.tsv("data.tsv", function(error, data) {
+	data.forEach(function(d) {
+		d.date = parseDate(d.date);
+		d.close = +d.close;
+	});
+
+	x.domain(d3.extent(data, function(d) {
+		return d.date;
+	}));
+	y.domain(d3.extent(data, function(d) {
+		return d.close;
+	}));
+
+	svg.append("g").attr("class", "x axis").attr("transform",
+			"translate(0," + height + ")").call(xAxis);
+
+	svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr(
+			"transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style(
+			"text-anchor", "end").text("Price ($)");
+
+	svg.append("path").datum(data).attr("class", "line").attr("d", line);
+	// });
+}

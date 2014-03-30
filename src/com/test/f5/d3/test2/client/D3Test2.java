@@ -161,6 +161,8 @@ public class D3Test2 implements EntryPoint {
 	}
 
 	private void drawGraphs() {
+		createDivChart();
+
 		SvgPanel svgPanel = new SvgPanel("svgBarsGraph");
 		RootPanel.get("graphContainer").add(svgPanel);
 		createSvgBarchart();
@@ -168,8 +170,6 @@ public class D3Test2 implements EntryPoint {
 		SvgPanel svgPanel1 = new SvgPanel("svgRotatedGraph");
 		RootPanel.get("graphContainer").add(svgPanel1);
 		createSvgRotatedBarchart();
-
-		createDivChart();
 
 		createSvgRotatedBarchartWithBars();
 
@@ -180,6 +180,10 @@ public class D3Test2 implements EntryPoint {
 		SvgPanel svgPanel3 = new SvgPanel("svgDonutChart");
 		RootPanel.get("graphContainer").add(svgPanel3);
 		createDonutChart();
+
+		SvgPanel svgPanel4 = new SvgPanel("svgFirstLineChart");
+		RootPanel.get("graphContainer").add(svgPanel4);
+		createFirstLineChart();
 	}
 
 	private void createDivChart() {
@@ -193,6 +197,7 @@ public class D3Test2 implements EntryPoint {
 		Element parent = RootPanel.getBodyElement();
 		Element divElement = DOM.createDiv();
 		divElement.setAttribute("class", "divChart");
+		divElement.setAttribute("height", "10%");
 		parent.appendChild(divElement);
 		createDivBarchart(divElement, jsData);
 	}
@@ -230,4 +235,7 @@ public class D3Test2 implements EntryPoint {
 		$wnd.drawDonut();
 	}-*/;
 
+	private native void createFirstLineChart() /*-{
+		$wnd.firstLineChart();
+	}-*/;
 }
